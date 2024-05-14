@@ -28,7 +28,7 @@ const Timer = ({initialMinute = 2, initialSeconds = 0}) => {
   
   return (
     <div>
-      <h1 className='text-lg font-bold text-yellow-300'>
+      <h1 className='text-lg font-bold text-black'>
         {minutes < 10 ? `0${minutes}` : minutes} : 
         {seconds < 10 ? `0${seconds}` : seconds}
       </h1>
