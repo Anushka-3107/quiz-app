@@ -1,26 +1,17 @@
 export const data = [
     {
-        question : 'Your Favourite color',
-        option1 : 'Red',
-        option2 : 'Black',
-        option3 : 'Yellow',
-        option4 : 'Blue',
+        ques : 'Your Favourite color',
+        options : [ 'Red','Black','Yellow','Blue',],
         answer : 1,
     },
     {
-        question : 'Your Favourite Food',
-        option1 : 'Maggie',
-        option2 : 'Aalo Paratha',
-        option3 : 'Dal Rice',
-        option4 : 'Burger',
+        ques: 'Your Favourite Food',
+        options: ['Maggie','Aalo Paratha', 'Dal Rice', 'Burger',],
         answer : 3,
     },
     {
-        question : 'Your Favourite City',
-        option1 : 'Delhi',
-        option2 : 'Noida',
-        option3 : 'Gurugram',
-        option4 : 'Patna',
+        ques : 'Your Favourite City',
+        options : ['Delhi','Noida','Gurugram','Patna'],
         answer : 1,
     },
 ]
