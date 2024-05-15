@@ -7,7 +7,7 @@ import { WiStars } from "react-icons/wi";
 const Questions = () => {
   const [index, setIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
-  const [correctAnswer, setCorrectAnswer] = useState(null);
+  const [isCorrect, setIsCorrect] = useState(null);
   const question = data[index];
 
   const checkAnswer = (selectedOption) => {
@@ -15,34 +15,21 @@ const Questions = () => {
       alert("Please select an option");
       return;
     }
-    if (selectedOption === question.answer + 1) {
-      setCorrectAnswer(selectedOption);
-      // alert("Correct answer");
-    } else {
-      setCorrectAnswer(question.answer);
-    }
     setSelectedOption(selectedOption);
+    if (selectedOption === question.answer) {
+      // alert('correct answer');
+      setIsCorrect(true);
+    } else {
+      setIsCorrect(false);
+      // alert("wrong answer");
+    }
   };
-
-  // const checkAnswer = () => {
-  //   if(selectedOption === null){
-  //     alert("Please select an option");
-  //     return;
-  //   }
-  //   if(selectedOption === question.answer){
-  //     setCorrectAnswer(selectedOption);
-  //     alert("Correct answer");
-  //   }
-  //   else{
-  //     setCorrectAnswer(question.answer);
-  //   }
-  //   setCorrectAnswer(selectedOption);
-  // };
 
   const nextQuestion = () => {
     if (index + 1 < data.length) {
       setIndex(index + 1);
       setSelectedOption(null);
+      setIsCorrect(null);
     }
   };
 
@@ -50,9 +37,11 @@ const Questions = () => {
     if (index - 1 >= 0) {
       setIndex(index - 1);
       setSelectedOption(null);
+      setIsCorrect(null);
     } else {
       setIndex(0);
       setSelectedOption(null);
+      setIsCorrect(null);
     }
   };
 
@@ -72,13 +61,10 @@ const Questions = () => {
           return (
             <button
               key={idx}
-              className={`bg-white my-3 px-2 py-2 border-r-4 border-b-4 border-[#BEEBE9] rounded-xl ${
-                selectedOption === idx + 1
-                  ? idx + 1 === question.answer
-                    ? "bg-green-400"
-                    : "bg-red-400"
-                  : ""
-              } ${idx + 1 === question.answer ? "bg-green-400" : ""}`}
+              className={`
+              ${isCorrect === true && idx+1 === question.answer  ? "bg-green-500" : ""}
+              ${isCorrect === false && idx + 1 === selectedOption ? "bg-red-500" : ""}
+              bg-white my-3 px-2 py-2 border-r-4 border-b-4 border-[#BEEBE9] rounded-xl`}
               onClick={() => checkAnswer(idx + 1)}
             >
               {option}
@@ -88,16 +74,15 @@ const Questions = () => {
       </div>
       {/* <button onClick={checkAnswer}>Check Answer</button>  */}
       <div className="flex justify-between text-center font-semibold">
-        
         <button
-          className="px-4 py-2 bg-[#9BE3DE] rounded-full text-black"
+          className="px-4 py-3 bg-[#9BE3DE] rounded-full text-black"
           onClick={prevQuestion}
         >
           Prev Question
         </button>
 
         <button
-          className="px-4 py-2 bg-[#9BE3DE] rounded-full text-black"
+          className="px-4 py-3 bg-[#9BE3DE] rounded-full text-black"
           onClick={nextQuestion}
         >
           Next Question
