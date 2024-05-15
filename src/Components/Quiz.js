@@ -15,7 +15,7 @@ const Quiz = () => {
         <h1 className="text-6xl font-extrabold text-red-500"> Quiz </h1>
         <button
           onClick={handleClick}
-          className="flex justify-center items-center px-6 py-3 rounded-full bg-red-300 text-white"
+          className="flex justify-center items-center px-6 py-3 rounded-full bg- text-black"
         >
           Start Your Quiz Here  
           <FaArrowRightLong 

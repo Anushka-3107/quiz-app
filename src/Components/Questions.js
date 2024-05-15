@@ -4,29 +4,57 @@ import { data } from "../data";
 import { BsStars } from "react-icons/bs";
 import { WiStars } from "react-icons/wi";
 
-
 const Questions = () => {
-  const [index,setIndex] = useState(0);
-  const[selectedOption,setSelectedOption] = useState(null);
+  const [index, setIndex] = useState(0);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [correctAnswer, setCorrectAnswer] = useState(null);
   const question = data[index];
 
-  const checkAnswer = () => {
-    if(selectedOption === null){
+  const checkAnswer = (selectedOption) => {
+    if (selectedOption === null) {
       alert("Please select an option");
       return;
     }
-    if(selectedOption === question.answer){
-      alert("Correct answer");
+    if (selectedOption === question.answer + 1) {
+      setCorrectAnswer(selectedOption);
+      // alert("Correct answer");
+    } else {
+      setCorrectAnswer(question.answer);
     }
-    else{
-      alert("Wrong answer");
+    setSelectedOption(selectedOption);
+  };
+
+  // const checkAnswer = () => {
+  //   if(selectedOption === null){
+  //     alert("Please select an option");
+  //     return;
+  //   }
+  //   if(selectedOption === question.answer){
+  //     setCorrectAnswer(selectedOption);
+  //     alert("Correct answer");
+  //   }
+  //   else{
+  //     setCorrectAnswer(question.answer);
+  //   }
+  //   setCorrectAnswer(selectedOption);
+  // };
+
+  const nextQuestion = () => {
+    if (index + 1 < data.length) {
+      setIndex(index + 1);
+      setSelectedOption(null);
     }
   };
 
-  const nextQuestion = () =>{
-    setIndex(index+1);
-    setSelectedOption(null);
-  }
+  const prevQuestion = () => {
+    if (index - 1 >= 0) {
+      setIndex(index - 1);
+      setSelectedOption(null);
+    } else {
+      setIndex(0);
+      setSelectedOption(null);
+    }
+  };
 
   return (
     <div className="m-6 flex flex-col">
@@ -34,27 +62,47 @@ const Questions = () => {
         <h2 className="text-xl text-black font-bold">
           {index + 1}.{question?.ques}
         </h2>
-       
-        <BsStars className= "absolute text-3xl text-white right-4 top-7" />
-        <WiStars className="absolute text-4xl text-white bottom-6 right-3"/>
+
+        <BsStars className="absolute text-3xl text-white right-4 top-7" />
+        <WiStars className="absolute text-4xl text-white bottom-6 right-3" />
       </div>
 
-      <div className="mt-7">
-        <ul>
-        {question?.options.map((option,idx)=>{
-          return(
-          <li key={idx}
-          className="bg-white my-3 px-2 py-4 border-r-4 border-b-4 border-[#BEEBE9] rounded-xl"
-          onClick={()=> setSelectedOption(idx+1)} 
-          >
-            {option}
-          </li>
-          )
+      <div className="mt-2 flex flex-col">
+        {question?.options.map((option, idx) => {
+          return (
+            <button
+              key={idx}
+              className={`bg-white my-3 px-2 py-2 border-r-4 border-b-4 border-[#BEEBE9] rounded-xl ${
+                selectedOption === idx + 1
+                  ? idx + 1 === question.answer
+                    ? "bg-green-400"
+                    : "bg-red-400"
+                  : ""
+              } ${idx + 1 === question.answer ? "bg-green-400" : ""}`}
+              onClick={() => checkAnswer(idx + 1)}
+            >
+              {option}
+            </button>
+          );
         })}
-        </ul>
       </div>
-      <button onClick={checkAnswer}>Check Answer</button>
-      <button onClick={nextQuestion}>Next Question</button>
+      {/* <button onClick={checkAnswer}>Check Answer</button>  */}
+      <div className="flex justify-between text-center font-semibold">
+        
+        <button
+          className="px-4 py-2 bg-[#9BE3DE] rounded-full text-black"
+          onClick={prevQuestion}
+        >
+          Prev Question
+        </button>
+
+        <button
+          className="px-4 py-2 bg-[#9BE3DE] rounded-full text-black"
+          onClick={nextQuestion}
+        >
+          Next Question
+        </button>
+      </div>
     </div>
   );
 };
