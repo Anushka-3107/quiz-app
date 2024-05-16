@@ -45,6 +45,12 @@ const Questions = () => {
     }
   };
 
+  // const endTest = () => {
+  //   if(index+1 === data.length){
+  //     alert("test completed")
+  //   }
+  // }
+
   return (
     <div className="m-6 flex flex-col">
       <div className="bg-[#BEEBE9] relative px-36 py-20 rounded-3xl border-r-4 border-[#9BE3DE] border-b-4 ">
@@ -87,6 +93,14 @@ const Questions = () => {
         >
           Next Question
         </button>
+
+        {index+1 === data.length && (
+          <button
+          className="px-4 py-3 bg-[#9BE3DE] rounded-full text-black"
+        onClick= {() => alert('test ended')}
+        >End Test</button>
+        )}
+        
       </div>
     </div>
   );
