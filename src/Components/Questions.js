@@ -3,12 +3,15 @@ import { useState } from "react";
 import { data } from "../data";
 import { BsStars } from "react-icons/bs";
 import { WiStars } from "react-icons/wi";
+import { useNavigate } from "react-router-dom";
 
 const Questions = () => {
   const [index, setIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
   const [isCorrect, setIsCorrect] = useState(null);
+  const [score,setScore] = useState(0);
   const question = data[index];
+  const navigate = useNavigate();
 
   const checkAnswer = (selectedOption) => {
     if (selectedOption === null) {
@@ -19,19 +22,13 @@ const Questions = () => {
     if (selectedOption === question.answer) {
       // alert('correct answer');
       setIsCorrect(true);
+      setScore(score+1);
     } else {
       setIsCorrect(false);
       // alert("wrong answer");
     }
   };
 
-  const nextQuestion = () => {
-    if (index + 1 < data.length) {
-      setIndex(index + 1);
-      setSelectedOption(null);
-      setIsCorrect(null);
-    }
-  };
 
   const prevQuestion = () => {
     if (index - 1 >= 0) {
@@ -45,11 +42,19 @@ const Questions = () => {
     }
   };
 
-  // const endTest = () => {
-  //   if(index+1 === data.length){
-  //     alert("test completed")
-  //   }
-  // }
+  const nextQuestion = () => {
+    if (index < data.length) {
+      setIndex(index + 1);
+      setSelectedOption(null);
+      setIsCorrect(null);
+    }
+  };
+
+
+  const endTest = () => {
+    // alert(score);
+    navigate('/QuizScore', {state : {score,totalQuestions : data.length}})
+  }
 
   return (
     <div className="m-6 flex flex-col">
@@ -62,15 +67,16 @@ const Questions = () => {
         <WiStars className="absolute text-4xl text-white bottom-6 right-3" />
       </div>
 
-      <div className="mt-2 flex flex-col">
+      <div className="mt-2 flex flex-col ">
         {question?.options.map((option, idx) => {
           return (
             <button
               key={idx}
               className={`
+              ${idx + 1 !== selectedOption  ? "bg-white" : ""}
               ${isCorrect === true && idx+1 === question.answer  ? "bg-green-500" : ""}
               ${isCorrect === false && idx + 1 === selectedOption ? "bg-red-500" : ""}
-              bg-white my-3 px-2 py-2 border-r-4 border-b-4 border-[#BEEBE9] rounded-xl`}
+              my-3 px-2 py-2 border-r-4 border-b-4 border-[#BEEBE9] rounded-xl`}
               onClick={() => checkAnswer(idx + 1)}
             >
               {option}
@@ -86,21 +92,22 @@ const Questions = () => {
         >
           Prev Question
         </button>
-
-        <button
+        {index+1 === data.length ? " " : <button
           className="px-4 py-3 bg-[#9BE3DE] rounded-full text-black"
           onClick={nextQuestion}
         >
           Next Question
-        </button>
+        </button>}
+        
 
-        {index+1 === data.length && (
+        {index+1 === data.length && 
           <button
           className="px-4 py-3 bg-[#9BE3DE] rounded-full text-black"
-        onClick= {() => alert('test ended')}
-        >End Test</button>
-        )}
-        
+          onClick={endTest}
+          >
+          End Test
+          </button>
+        }
       </div>
     </div>
   );
