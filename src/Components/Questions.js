@@ -84,7 +84,7 @@ const Questions = () => {
           );
         })}
       </div>
-      {/* <button onClick={checkAnswer}>Check Answer</button>  */}
+      
       <div className="flex justify-between text-center font-semibold">
         <button
           className="px-4 py-3 bg-[#9BE3DE] rounded-full text-black"

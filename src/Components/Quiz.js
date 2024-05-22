@@ -11,7 +11,7 @@ const Quiz = () => {
 
   return (
     <div className="flex justify-center items-center h-screen bg-[#f1e6da]">
-      <div className="flex flex-col justify-center items-center space-y-10 rounded-lg bg-[#f5d5de] p-60 ">
+      <div className="flex flex-col justify-center items-center  shadow-xl space-y-10 rounded-lg bg-[#f5d5de] p-60 ">
         <h1 className="text-6xl font-extrabold text-red-500"> Quiz </h1>
         <button
           onClick={handleClick}
